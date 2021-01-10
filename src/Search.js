@@ -28,8 +28,8 @@ export default class Search extends React.Component {
                         <label>
                             Url to check
                         </label>
-                        <input className="Query" value={this.state.url} onChange={this.handleChange} type="text"></input>
-                        <button type="submit">LAUNCH ANALYSIS</button>
+                        <input id="Query" value={this.state.url} onChange={this.handleChange} type="text"></input>
+                        <button id="Submit" type="submit">LAUNCH ANALYSIS</button>
                     </form>
                 </div>
             </section>

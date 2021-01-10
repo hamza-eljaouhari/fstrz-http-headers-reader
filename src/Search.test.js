@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react';
 import SearchFunctions from './Search.functions';
+import {shallow } from 'enzyme';
+import Search from './Search'
+
 const axios = require('axios');
 
 jest.mock('axios')
@@ -12,7 +15,6 @@ describe('History', () => {
         axios.post.mockImplementationOnce(() =>
             Promise.reject(new Error(errorMessage)),
         );
-
 
         await expect(SearchFunctions.fetchHttpHeaders('https://www.google.com')).rejects.toEqual(new Error(errorMessage));
     });
@@ -36,7 +38,20 @@ describe('History', () => {
         await expect(axios.post).toHaveBeenCalledWith("http://localhost:3000", {"url": "http://wwww.fasterize.com"});
     })
 
-    // it('Input must be empty after clicking "Launch Analysis"', async () => {
+    it('Input must be empty after clicking "Launch Analysis"', async () => {
+        
+        const search = shallow(<Search></Search>);
 
-    // })
+        search.setState({
+            url: 'http://www.fasterize.com'
+        });
+
+        await expect(search.state().url).toEqual('http://www.fasterize.com')
+
+        const query = search.find('#Query');
+
+        search.find('#Submit').simulate('click');
+        
+        await expect(query.text()).toEqual('');
+    })
 });
