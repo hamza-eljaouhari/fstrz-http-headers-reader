@@ -18,6 +18,7 @@ function onSubmit(e, url){
             var link = response.data;
             link.url = url;
             link.date = String(now.getDate()).padStart(2, '0')    + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear() 
+            
             this.props.onDataRetrieval(link)
 
             this.setState({

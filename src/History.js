@@ -36,7 +36,6 @@ export default class History extends React.Component {
     }
 
     isGreen(link){
-        console.log("test", link.plugged === true && link.fstrzFlags.includes('optimisée'))
         return link.plugged === true && link.fstrzFlags.includes('optimisée');
     }
 
@@ -64,9 +63,9 @@ export default class History extends React.Component {
 
         const headings = this.state.headings.map((heading) => <th key={heading}>{ heading }</th>);
 
-        const rows = this.props.links.map((link) => {
+        const rows = this.props.links.map((link, index) => {
                return (
-                    <tr key={link.url}>
+                    <tr key={index}>
                         <td>{link.date}</td>
                         <td>{link.url}</td>
                         <td>

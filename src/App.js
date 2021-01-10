@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Sidebar from './Sidebar'
 import Header from './Header'
@@ -8,15 +8,19 @@ import History from './History'
 
 function App() {
 
-  const [links, setLinks] = useState([])
+
+  const [links, setLinks] = useState([]);
+
+  useEffect(() => {
+    var localStorageLinks = localStorage.getItem('links');
+    var setting = localStorageLinks?.length > 0 ? JSON.parse(localStorageLinks) : [];
+    setLinks(setting);
+  }, []);
   
   function onDataRetrieval(link){
-    console.log(link)
-    setLinks([link].concat(links))
-    var lsLinks = localStorage.getItem('links');
-    if(lsLinks !== null){
-      localStorage.setItem('links', JSON.parse(lsLinks).push(link))
-    }
+    var newLinks = [link, ...links]; 
+    setLinks(newLinks);
+    localStorage.setItem('links', JSON.stringify(newLinks));
   }
 
   return (
@@ -30,8 +34,10 @@ function App() {
             className="App-Search"
             onDataRetrieval={onDataRetrieval}
             ></Search>
+
+            { links.length }
         { links.length > 0 &&
-          <History links={links} className="App-History" ></History>
+          <History key={links.length} links={links} className="App-History" ></History>
         }
       </section> 
     </div>
