@@ -66,7 +66,7 @@ async function onSubmit(url, index, mappedUrls){
                 if(error.response.status === 404){
                     this.props.onError({
                         id: mappedUrls[index].id,  
-                        data: errors['not-found']
+                        data: errors['not-found'].message
                     })
                 }
             }

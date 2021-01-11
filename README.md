@@ -1,3 +1,9 @@
+1. Responsiveness
+2. Sidebar height
+3. Clean code
+4. Tests
+5. Table display should be clean
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -84,10 +84,8 @@ function App() {
 
   return (
     <div className="App">
-      <section className="First-Column">
-        <Sidebar className="App-Sidebar"></Sidebar>
-      </section>
-      <section className="Second-Column">
+      <Sidebar className="App-Sidebar"></Sidebar>
+      <section className="Second">
         <Header className="App-Header"></Header>
         {
           errors.length > 0 && 
