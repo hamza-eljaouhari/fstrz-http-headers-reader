@@ -50,3 +50,16 @@ body {
   display: flex;
   align-items: center;
 }
+
+.Loading-Box {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  background-color: white;
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.7);
+}
+
+.Loading-Box tr td{
+  padding: 15px;
+  vertical-align: middle;
+}

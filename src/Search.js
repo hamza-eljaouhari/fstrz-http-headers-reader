@@ -5,11 +5,15 @@ import './Search.css';
 export default class Search extends React.Component { 
     constructor(props) {
         super(props);
+        
         this.fetchHttpHeaders = SearchFunctions.fetchHttpHeaders.bind(this);
         this.handleChange = SearchFunctions.handleChange.bind(this);
         this.onSubmit = SearchFunctions.onSubmit.bind(this);
+        this.validateURL = SearchFunctions.validateURL.bind(this);
+        
         this.state = {
-            url: ''
+            url: '',
+            error: null
         }
     }
 

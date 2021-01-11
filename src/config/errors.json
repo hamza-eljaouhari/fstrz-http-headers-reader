@@ -1,0 +1,6 @@
+{
+    "invalid-url": {
+        "message": "Veuillez insérer une URL valide.",
+        "type": "Validation error"
+    }
+}

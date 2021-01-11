@@ -2,6 +2,8 @@ import { render } from '@testing-library/react';
 import SearchFunctions from './Search.functions';
 import {shallow } from 'enzyme';
 import Search from './Search'
+import ErrorBox from './ErrorBox'
+import App from './App'
 
 const axios = require('axios');
 
@@ -10,6 +12,7 @@ jest.mock('axios')
 describe('History', () => {
 
     it('Should get a 400 validation error when an invalid URL is sent', async () => {
+        
         const errorMessage = "L'URL que vous avez entré n'existe pas.";
 
         axios.post.mockImplementationOnce(() =>
@@ -53,5 +56,17 @@ describe('History', () => {
         search.find('#Submit').simulate('click');
         
         await expect(query.text()).toEqual('');
+    })
+
+    it('Should not validate the url', () => {
+        const url = "URL erronée";
+
+        expect(SearchFunctions.validateURL(url)).toEqual(false);
+    })
+
+    it('Should not validate the url', () => {
+        const url = "https://www.fasterize.com";
+
+        expect(SearchFunctions.validateURL(url)).toEqual(true);
     })
 });
