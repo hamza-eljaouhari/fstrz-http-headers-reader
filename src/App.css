@@ -28,10 +28,6 @@ body {
   display: flex;
 }
 
-.App-Sidebar {
-
-}
-
 .Square-Border-Radius {
   display: inline-block;
   height: 32px;
