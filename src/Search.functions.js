@@ -8,9 +8,9 @@ async function fetchHttpHeaders(url){
 };
 
 function handleChange(e) {
-    this.setState({ url: e.target.value });
+    this.setState({ urls: e.target.value.split(',') });
 };
-
+ 
 function validateURL(url){
     const urlPattern = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 
@@ -23,27 +23,34 @@ function validateURL(url){
     return true;
 }
 
-async function onSubmit(e, url){
+function submitMultiple(e, urls){
     e.preventDefault();
-    var timestamp = (new Date()).getTime();
 
-    if(!this.validateURL(url)){
-        this.props.onError({
-            id: timestamp,  
-            data: errors['invalid-url']
-        })
-        return false;
-    }
+    urls.forEach((url, index) => {
+        if(!this.validateURL(url)){
+            this.props.onError({
+                id: (new Date()).getTime() + index,  
+                data: errors['invalid-url'].message + ' ' + url
+            })
 
-    this.props.onLoading({
-        id: timestamp,
-        url: url, 
-        loading: true
+            urls.splice(index, 1);
+        }
+    })
+    
+    const loadingSettingsUrls = urls.map((url, index) => {
+        return {
+            id: (new Date()).getTime() + index,
+            url: url
+        }
     });
 
-    this.setState({
-        url: ''
+    urls.forEach((url, index) => {
+        this.props.onLoading(loadingSettingsUrls);
+        this.onSubmit(url, index, loadingSettingsUrls);
     })
+}
+
+async function onSubmit(url, index, mappedUrls){
 
     this.fetchHttpHeaders(url)
         .then((response) => {
@@ -55,19 +62,21 @@ async function onSubmit(e, url){
             this.props.onDataRetrieval(link)
         })
         .catch((error) => {
-            console.log(error);
-            console.log(error.response)
-            console.log(error.response.data.error)
-            
-            if(error.response.status === 404){
-                this.props.onError({
-                    id: timestamp,  
-                    data: errors['not-found']
-                })
+            if(error.response){
+                if(error.response.status === 404){
+                    this.props.onError({
+                        id: mappedUrls[index].id,  
+                        data: errors['not-found']
+                    })
+                }
             }
         }).finally(() => {
             this.props.onLoaded({
-                id: timestamp
+                id: mappedUrls[index].id
+            })
+            
+            this.setState({
+                urls: []
             })
         })
 }
@@ -77,7 +86,8 @@ const functions = {
     fetchHttpHeaders,
     handleChange,
     onSubmit,
-    validateURL
+    validateURL,
+    submitMultiple
 }
 
 export default functions

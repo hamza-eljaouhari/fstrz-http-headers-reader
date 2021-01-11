@@ -14,17 +14,38 @@ function App() {
   const [links, setLinks] = useState([]);
   const [loadingLinks, setLoadingLinks] = useState([]);
   const [errors, setErrors] = useState([]);
+  // const [timeoutErrorsInterval, setTimeoutErrorInterval] = useState(-1);
 
   useEffect(() => {
     var localStorageLinks = localStorage.getItem('links');
     var setting = localStorageLinks?.length > 0 ? JSON.parse(localStorageLinks) : [];
     setLinks(setting);
+
   }, []);
-  
-  function onError(error){
-    const newErrors = [error, ...errors];
-    setErrors(newErrors);
-  }
+
+  // useEffect(() => {
+  //   if(errors.length === 0){
+  //     clearInterval(timeoutErrorsInterval)
+  //     setTimeoutErrorInterval(-1);
+  //   } else {
+
+  //     if(timeoutErrorsInterval === -1){
+  //       var intervalId = setInterval(function(){
+  //         const cleanedErrors = errors.filter(function(err){
+  //           return (new Date()).getTime() - err.id < 2500;
+  //         })
+
+  //         setErrors(cleanedErrors)
+          
+  //         console.log("interval")
+  //       }, 2500)
+
+  //       setTimeoutErrorInterval(intervalId);
+  //     }
+  //   }
+
+  //   console.log(intervalId);
+  // }, [errors, timeoutErrorsInterval]);
 
   function onDataRetrieval(link){
     var newLinks = [link, ...links]; 
@@ -33,7 +54,7 @@ function App() {
   }
 
   function onLoading(data){
-    const newLoadingLinks = [data, ...loadingLinks]
+    const newLoadingLinks = [...data, ...loadingLinks]
     setLoadingLinks(newLoadingLinks);
   }
 
@@ -45,6 +66,12 @@ function App() {
     });
 
     setLoadingLinks(cleanedLinks);
+  }
+
+  function onError(error){
+    const newErrors = [error, ...errors];
+
+    setErrors(newErrors);
   }
 
   function onDeleteError(id){

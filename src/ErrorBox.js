@@ -12,7 +12,7 @@ function ErrorBox(props){
                         return (
                             <React.Fragment key={error.id + '-Fragment'}>
                                 <li className="Error-Message">
-                                    {error.data.message}
+                                    {error.data}
                                     <span 
                                     onClick={() => props.onDeleteError(error.id)} 
                                     className="Close-Error-Message">x</span>
