@@ -53,12 +53,22 @@ async function onSubmit(e, url){
             link.date = String(now.getDate()).padStart(2, '0')    + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear() 
             
             this.props.onDataRetrieval(link)
-            this.props.onLoaded({
-                id: timestamp
-            })
         })
         .catch((error) => {
             console.log(error);
+            console.log(error.response)
+            console.log(error.response.data.error)
+            
+            if(error.response.status === 404){
+                this.props.onError({
+                    id: timestamp,  
+                    data: errors['not-found']
+                })
+            }
+        }).finally(() => {
+            this.props.onLoaded({
+                id: timestamp
+            })
         })
 }
 

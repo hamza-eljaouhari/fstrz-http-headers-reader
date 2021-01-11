@@ -1,9 +1,11 @@
 import { render } from '@testing-library/react';
 import SearchFunctions from './Search.functions';
 import {shallow } from 'enzyme';
-import Search from './Search'
-import ErrorBox from './ErrorBox'
-import App from './App'
+import Search from './Search';
+import ErrorBox from './ErrorBox';
+import App from './App';
+
+const errors = require('./config/errors.json');
 
 const axios = require('axios');
 
@@ -68,5 +70,16 @@ describe('History', () => {
         const url = "https://www.fasterize.com";
 
         expect(SearchFunctions.validateURL(url)).toEqual(true);
+    })
+
+    it('Should not validate the url', async () => {
+          
+        const errorMessage = errors['not-found'].message;
+
+        axios.post.mockImplementationOnce(() =>
+            Promise.reject(new Error(errorMessage))
+        );
+
+        await expect(SearchFunctions.fetchHttpHeaders('https://www.url-qui-n-existe-pas.com')).rejects.toEqual(new Error(errorMessage));
     })
 });

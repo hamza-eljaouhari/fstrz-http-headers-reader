@@ -2,5 +2,9 @@
     "invalid-url": {
         "message": "Veuillez insérer une URL valide.",
         "type": "Validation error"
+    },
+    "not-found": {
+        "message": "L'URL que vous avez indiqué est injoignable.",
+        "type": "Network error"
     }
 }
