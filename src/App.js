@@ -97,21 +97,21 @@ function App() {
             onDeleteError={onDeleteError}
             ></ErrorBox>
         }
-        <Search 
-            className="App-Search"
-            onDataRetrieval={onDataRetrieval}
-            onLoading={onLoading}
-            onLoaded={onLoaded}
-            onError={onError}
-            ></Search>
-
-        { loadingLinks.length > 0 && 
-          <LoadingBox key={loadingLinks.length + '-Loading-Box'} links={loadingLinks}></LoadingBox>
-        }
-        { links.length > 0 &&
-          <History key={links.length + '-History'} links={links} className="App-History" ></History>
-        }
-        
+        <section className="Body-Container">
+          <Search 
+              className="App-Search"
+              onDataRetrieval={onDataRetrieval}
+              onLoading={onLoading}
+              onLoaded={onLoaded}
+              onError={onError}
+              ></Search>
+          { links.length > 0 &&
+            <History key={links.length + '-History'} links={links} className="App-History" ></History>
+          }
+          { loadingLinks.length > 0 && 
+            <LoadingBox key={loadingLinks.length + '-Loading-Box'} links={loadingLinks}></LoadingBox>
+          }
+        </section>
       </section> 
     </div>
   );
