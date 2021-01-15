@@ -84,9 +84,12 @@ function App() {
 
   return (
     <div className="App">
-      <Sidebar className="App-Sidebar"></Sidebar>
+      <section className="First">
+        <Sidebar></Sidebar>
+      </section>
       <section className="Second">
-        <Header className="App-Header"></Header>
+
+        <Header></Header>
         {
           errors.length > 0 && 
           <ErrorBox 
@@ -95,9 +98,8 @@ function App() {
             onDeleteError={onDeleteError}
             ></ErrorBox>
         }
-        <section className="Body-Container">
+        <div className="Body-Container">
           <Search 
-              className="App-Search"
               onDataRetrieval={onDataRetrieval}
               onLoading={onLoading}
               onLoaded={onLoaded}
@@ -109,8 +111,8 @@ function App() {
           { loadingLinks.length > 0 && 
             <LoadingBox key={loadingLinks.length + '-Loading-Box'} links={loadingLinks}></LoadingBox>
           }
-        </section>
-      </section> 
+        </div>
+      </section>
     </div>
   );
 }

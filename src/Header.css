@@ -5,3 +5,8 @@ header {
     text-align: center;
     line-height: 80px;
 }
+
+header h4 {
+    margin: 0;
+    padding: 0;
+}
